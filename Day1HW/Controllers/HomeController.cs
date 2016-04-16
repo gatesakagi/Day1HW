@@ -22,6 +22,7 @@ namespace Day1HW.Controllers
             using (SkillTreeHomeworkEntities context = new SkillTreeHomeworkEntities())
             {
                 var query = from item in context.AccountBook
+                            orderby item.Dateee descending
                             select new
                             {
                                 a = item.Id,
