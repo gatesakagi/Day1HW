@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Day1HW.Models.ViewModels.AccountContentViewModel>
+﻿@model IEnumerable<Day1HW.Models.AccountBook>
 @{
     ViewBag.Title = "ShowAccountContent";
     Layout = null;
@@ -17,12 +17,12 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@(i)</td>
-                    <td>@(item.accountCategory)</td>
-                    <td>@(item.accountDate.ToString("yyyy-MM-dd"))</td>
-                    <td>@(item.accountFee.ToString("N0"))</td>
+                    <td>@(i).</td>
+                    <td>@Html.Raw(Convert.ToBoolean(item.Categoryyy) ? "收入" : "支出")</td>
+                    <td>@(item.Dateee.ToString("yyyy-MM-dd"))</td>
+                    <td>@(item.Amounttt.ToString("N0"))</td>
                 </tr>
-                i++;
+                ++i;
             }
         </table>
     </div>
