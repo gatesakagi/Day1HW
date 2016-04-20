@@ -14,7 +14,7 @@ namespace Day1HW.Controllers
         [ChildActionOnly]
         public ActionResult ShowAccountContent()
         {
-            List<AccountBook> accountList = new List<AccountBook>();
+            List<AccountContentViewModel> accountList = new List<AccountContentViewModel>();
 
             //accountList.Add(new AccountContentViewModel { accountCategory = "支出", accountDate = new DateTime(2016, 1, 1), accountFee = 300, accountNote = "" });
             //accountList.Add(new AccountContentViewModel { accountCategory = "支出", accountDate = new DateTime(2016, 1, 2), accountFee = 1600, accountNote = "" });
@@ -25,7 +25,7 @@ namespace Day1HW.Controllers
                             orderby item.Dateee descending
                             select item;                            ;
                 foreach (var item in query)
-                    accountList.Add(new AccountBook { Id = item.Id, Categoryyy = item.Categoryyy, Amounttt = item.Amounttt, Dateee = item.Dateee, Remarkkk = item.Remarkkk });
+                    accountList.Add(new AccountContentViewModel { accountCategory = item.Categoryyy, accountFee = item.Amounttt, accountDate = item.Dateee, accountNote = item.Remarkkk });
             }
             return View(accountList);
         }
