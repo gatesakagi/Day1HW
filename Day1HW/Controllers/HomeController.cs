@@ -23,16 +23,9 @@ namespace Day1HW.Controllers
             {
                 var query = from item in context.AccountBook
                             orderby item.Dateee descending
-                            select new
-                            {
-                                a = item.Id,
-                                b = item.Categoryyy,
-                                c = item.Amounttt,
-                                d = item.Dateee,
-                                e = item.Remarkkk
-                            };
+                            select item;                            ;
                 foreach (var item in query)
-                    accountList.Add(new AccountBook { Id = item.a, Categoryyy = item.b, Amounttt = item.c, Dateee = item.d, Remarkkk = item.e });
+                    accountList.Add(new AccountBook { Id = item.Id, Categoryyy = item.Categoryyy, Amounttt = item.Amounttt, Dateee = item.Dateee, Remarkkk = item.Remarkkk });
             }
             return View(accountList);
         }
