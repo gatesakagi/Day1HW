@@ -35,6 +35,30 @@ namespace Day1HW.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Index(AccountContentViewModel data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(data);
+            }
+
+            var accountBookNew = new AccountBook
+            {
+                Id = Guid.NewGuid(),
+                Categoryyy = data.accountCategory,
+                Amounttt = (int)data.accountFee,
+                Dateee = data.accountDate,
+                Remarkkk = data.accountNote
+            };
+
+            SkillTreeHomeworkEntities db = new SkillTreeHomeworkEntities();
+            db.AccountBook.Add(accountBookNew);
+            db.SaveChanges();
+
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

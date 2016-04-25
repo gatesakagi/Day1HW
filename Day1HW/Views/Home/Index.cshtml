@@ -1,41 +1,62 @@
-﻿@{
+﻿@model Day1HW.Models.ViewModels.AccountContentViewModel
+@{
     ViewBag.Title = "我的記帳本";
 }
+<br /><br />
 <div class="well">
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label for="category" class="col-sm-2 control-label">類別</label>
-            <div class="col-sm-10">
-                <select id="category" class="form-control">
-                    <option value="" selected>請選擇</option>
-                    <option>支出</option>
-                    <option>收入</option>
-                </select>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.accountCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.accountCategory, new SelectList(
+                 new List<Object>{
+                           new { value = "1" , text = "收入"  },
+                           new { value = "0" , text = "支出" }
+                 }, "value", "text"), "請選擇...", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.accountCategory, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.accountFee, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.accountFee, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.accountFee, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.accountDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.accountDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.accountDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.accountNote, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.accountNote, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.accountNote, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="money" class="col-sm-2 control-label">金額</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="money" placeholder="金額">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="送出" class="btn btn-default" />
             </div>
         </div>
-        <div class="form-group">
-            <label for="date" class="col-sm-2 control-label">日期</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="date" placeholder="日期">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">備註</label>
-            <div class="col-sm-10">
-                <textarea class="form-control" id="description"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-8 col-sm-4">
-                <button type="submit" class="btn btn-default">送出</button>
-            </div>
-        </div>
-    </form>
+        <br /><br />
+    }
 </div>
-@Html.Action("ShowAccountContent")
+<br />
+<div>
+    @Html.Action("ShowAccountContent")
+</div>
