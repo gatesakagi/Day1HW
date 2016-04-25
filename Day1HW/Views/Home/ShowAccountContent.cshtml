@@ -3,7 +3,17 @@
     ViewBag.Title = "ShowAccountContent";
     Layout = null;
 }
-
+@helper checkCategoryColor(int categoryData)
+{
+    if (Convert.ToBoolean(categoryData))
+    {
+        <span style="color: blue">收入</span>
+    }
+    else
+    {
+        <span style="color: red">支出</span>
+    }
+}
 <div class="row">
     <div class="col-md-12">
         <table class="table table-bordered table-hover">
@@ -18,7 +28,8 @@
             {
                 <tr>
                     <td>@(i).</td>
-                    <td>@Html.Raw(Convert.ToBoolean(item.accountCategory) ? "收入" : "支出")</td>
+                    <td>@checkCategoryColor(item.accountCategory)</td>
+                    @*<td>@Html.Raw(Convert.ToBoolean(item.accountCategory) ? "收入" : "支出")</td>*@
                     <td>@(item.accountDate.ToString("yyyy-MM-dd"))</td>
                     <td>@(item.accountFee.ToString("N0"))</td>
                 </tr>

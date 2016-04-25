@@ -55,6 +55,7 @@ namespace Day1HW.Controllers
             SkillTreeHomeworkEntities db = new SkillTreeHomeworkEntities();
             db.AccountBook.Add(accountBookNew);
             db.SaveChanges();
+            ModelState.Clear();
 
             return View();
         }
