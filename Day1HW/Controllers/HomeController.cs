@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Day1HW.Models.ViewModels;
 using System.Data.Entity.Core.EntityClient;
+using System.ServiceModel.Syndication;
+using Day1HW.CustomResults;
 
 namespace Day1HW.Controllers
 {
@@ -23,13 +25,14 @@ namespace Day1HW.Controllers
             {
                 var query = from item in context.AccountBook
                             orderby item.Dateee descending
-                            select item;                            ;
+                            select item;
                 foreach (var item in query)
                     accountList.Add(new AccountContentViewModel { accountCategory = item.Categoryyy, accountFee = item.Amounttt, accountDate = item.Dateee, accountNote = item.Remarkkk });
             }
             return View(accountList);
         }
 
+        [Authorize]
         public ActionResult Index()
         {
             return View();
@@ -70,5 +73,41 @@ namespace Day1HW.Controllers
 
             return View();
         }
+
+        public virtual ActionResult Feed(string id)
+        {
+            var items = new List<SyndicationItem>();
+
+            using (SkillTreeHomeworkEntities context = new SkillTreeHomeworkEntities())
+            {
+                var query = from item in context.AccountBook
+                            orderby item.Dateee descending
+                            select item;
+                var topTen = query.Take(10);
+                foreach (var content in topTen)
+                {
+                    string feedTitle = "";
+                    if (content.Categoryyy == 0)
+                    {
+                        feedTitle = "支出|";
+                    } else
+                    {
+                        feedTitle = "收入|";
+                    }
+                    var helper = new UrlHelper(this.Request.RequestContext);
+                    var url = helper.Action("Index", "Home", new { }, Request.IsSecureConnection ? "https" : "http");
+
+                    var feedPackageItem = new SyndicationItem(feedTitle + content.Remarkkk.ToString(), content.Amounttt.ToString("N0"), new Uri(url));
+                    feedPackageItem.PublishDate = content.Dateee;
+                    items.Add(feedPackageItem);
+                }
+                return new RssActionResult("我的記帳本 RSS", items);
+            }
+
+
+
+                
+           
+       }  
     }
 }
