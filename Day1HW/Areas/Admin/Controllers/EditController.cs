@@ -17,9 +17,8 @@ namespace Day1HW.Areas.Admin.Controllers
                 return View();
             } else
             {
-                return RedirectToAction("Index", "Home", new { area = "" });
+                return RedirectToAction("Index", new {controller = "Home", area = "" });
             }
-            
         }
     }
 }

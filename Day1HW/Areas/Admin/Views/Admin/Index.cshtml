@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Day1HW.Models.ViewModels.AccountContentViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+@helper checkCategoryColor(int categoryData)
+{
+if (categoryData == 1)
+{
+        <span style="color: blue">收入</span>
+}
+else
+{
+        <span style="color: red">支出</span>
+}
+}
+<h2>管理平臺</h2>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>#</th>
+                <th>類別</th>
+                <th>日期</th>
+                <th>金額</th>
+                <th></th>
+            </tr>
+
+            @{ var i = 1; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(i).</td>
+                    <td>@checkCategoryColor(item.accountCategory)</td>
+                    @*<td>@Html.Raw(Convert.ToBoolean(item.accountCategory) ? "收入" : "支出")</td>*@
+                    <td>@(item.accountDate.ToString("yyyy-MM-dd"))</td>
+                    <td>@(item.accountFee.ToString("N0"))</td>
+                    <td><button class="btn btn-success">編輯</button>&nbsp;&nbsp;<button class="btn btn-danger">刪除</button></td>
+                </tr>
+                ++i;
+            }
+        </table>
+    </div>
+</div>
